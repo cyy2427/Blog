@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% if title %}
+    <title>{{ title }} - app</title>
+    {% else %}
+    <title>app</title>
+    {% endif %}
+</head>
+<body>
+    <div>Hello, {{user.nickname}}!</div>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>
