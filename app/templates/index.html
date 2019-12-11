@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    {% if title %}
-    <title>{{ title }} - app</title>
-    {% else %}
-    <title>app</title>
-    {% endif %}
-</head>
-<body>
-    Hello, {{user.nickname}}!
-    {% for post in posts %}
-    <p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
-    {% endfor %}
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h1>Hi, {{ user.nickname }}!</h1>
+{% for post in posts %}
+<div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p></div>
+{% endfor %}
+{% endblock %}
