@@ -12,6 +12,7 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 lm = LoginManager()
+lm.init_app(app)
 oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 from app import views, models
