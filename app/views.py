@@ -29,7 +29,7 @@ def register():
             flash('passwords did not match')
             return redirect(render_template('register.html', title='Register', form=form))
 
-        user = User(username = form.username, password = form.password1.data)
+        user = User(username=form.username, password=form.password1.data)
         db.session.add(user)
         db.session.commit()
         flash('successfully registered')
