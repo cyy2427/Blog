@@ -1,8 +1,9 @@
+from datetime import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
 from flask_login import login_user, login_required, current_user
 from app import app, lm
-from app.forms import LoginForm, RegisterForm
-from app.models import User, db
+from app.forms import LoginForm, RegisterForm, PostForm
+from app.models import User, Post, db
 
 
 @app.route('/')
@@ -18,12 +19,24 @@ def index():
                            posts=posts)
 
 
-@app.route('/create_post', methods=['GET', 'POST'])
+@app.route('/newpost', methods=['GET', 'POST'])
 @login_required
-def create_post():
+def newpost():
     user = current_user
     form = PostForm()
+    if request.method == 'POST':
+        if not form.validate_on_submit():
+            flash(form.errors)
+            return render_template('newpost.html', title='New Post', form=form)
 
+        post_body = form.post.data
+        post = Post(body=post_body, user_id=user.user_id)
+        db.session.add(post)
+        db.session.commit()
+        flash("New post created successfully.")
+        return redirect(url_for('index'))
+
+    return render_template('newpost.html', title='New Post', form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])

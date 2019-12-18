@@ -32,7 +32,6 @@ class User(db.Model, UserMixin):
 class Post(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(150))
-    timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
