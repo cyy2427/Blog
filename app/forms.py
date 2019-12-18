@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField
+from wtforms import StringField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 
 
@@ -15,5 +15,6 @@ class RegisterForm(FlaskForm):
     password2 = StringField('password', validators=[DataRequired('password is null')])
 
 
-class PostForm(FlaskForm)
+class PostForm(FlaskForm):
     post = StringField('Post:', validators=[DataRequired('post is null')])
+    submit = SubmitField('Submit')
