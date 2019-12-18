@@ -1,6 +1,5 @@
-from datetime import datetime
 from flask import render_template, flash, redirect, session, url_for, request, g
-from flask_login import login_user, login_required, current_user
+from flask_login import login_user, login_required, current_user, logout_user
 from app import app, lm
 from app.forms import LoginForm, RegisterForm, PostForm
 from app.models import User, Post, db
@@ -75,6 +74,12 @@ def login():
     return render_template('login.html',
                            title='Sign In',
                            form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
 @lm.user_loader
