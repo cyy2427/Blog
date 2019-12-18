@@ -3,20 +3,12 @@ from app import db
 
 
 class User(db.Model, UserMixin):
-
-    user_id = db.Column('id', db.Integer, primary_key=True)
+    user_id = db.Column('id', db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(20))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     __tablename__ = 'user'
-
-    def __init__(self, user_id, username, password):
-
-        self.user_id = user_id
-        self.username = username
-        self.password = password
-
 
     @property
     def is_authenticated(self):
@@ -38,7 +30,7 @@ class User(db.Model, UserMixin):
 
 
 class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(150))
     timestamp = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

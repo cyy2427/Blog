@@ -1,21 +1,29 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
-from flask_login import login_user, login_required
+from flask_login import login_user, login_required, current_user
 from app import app, lm
 from app.forms import LoginForm, RegisterForm
 from app.models import User, db
 
 
-@login_required
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = {'nickname': 'cyy'}  # fake user
+    user = current_user
     posts = [{'author': {'nickname': 'John'}, 'body': 'Beautiful day!'},
              {'author': {'nickname': 'Susan'}, 'body': 'Cool Movie!'}]
     return render_template("index.html",
                            title='Home',
                            user=user,
                            posts=posts)
+
+
+@app.route('/create_post', methods=['GET', 'POST'])
+@login_required
+def create_post():
+    user = current_user
+    form = PostForm()
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -29,7 +37,7 @@ def register():
             flash('passwords did not match')
             return redirect(render_template('register.html', title='Register', form=form))
 
-        user = User(username=form.username, password=form.password1.data)
+        user = User(username=form.username.data, password=form.password1.data)
         db.session.add(user)
         db.session.commit()
         flash('successfully registered')
@@ -49,7 +57,7 @@ def login():
 
         if user:
             login_user(user)
-            return render_template("index.html")
+            return redirect(url_for('index'))
 
     return render_template('login.html',
                            title='Sign In',

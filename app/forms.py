@@ -13,3 +13,7 @@ class RegisterForm(FlaskForm):
     username = StringField('username', validators=[DataRequired('username is null')])
     password1 = StringField('password', validators=[DataRequired('password is null')])
     password2 = StringField('password', validators=[DataRequired('password is null')])
+
+
+class PostForm(FlaskForm)
+    post = StringField('Post:', validators=[DataRequired('post is null')])
