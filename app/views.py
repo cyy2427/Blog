@@ -1,41 +1,17 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
-from flask_login import login_user, login_required, current_user, logout_user
-from app import app, lm
-from app.forms import LoginForm, RegisterForm, PostForm
-from app.models import User, Post, db
+from flask_login import login_user
+from app import app, lm, db
+from app.forms import LoginForm, RegisterForm
+from app.models import User
+from app.user import user
+
+
+app.register_blueprint(user)
 
 
 @app.route('/')
-@app.route('/index')
-@login_required
-def index():
-    user = current_user
-    posts = [{'author': {'nickname': 'John'}, 'body': 'Beautiful day!'},
-             {'author': {'nickname': 'Susan'}, 'body': 'Cool Movie!'}]
-    return render_template("index.html",
-                           title='Home',
-                           user=user,
-                           posts=posts)
-
-
-@app.route('/newpost', methods=['GET', 'POST'])
-@login_required
-def newpost():
-    user = current_user
-    form = PostForm()
-    if request.method == 'POST':
-        if not form.validate_on_submit():
-            flash(form.errors)
-            return render_template('newpost.html', title='New Post', form=form)
-
-        post_body = form.post.data
-        post = Post(body=post_body, user_id=user.user_id)
-        db.session.add(post)
-        db.session.commit()
-        flash("New post created successfully.")
-        return redirect(url_for('index'))
-
-    return render_template('newpost.html', title='New Post', form=form)
+def welcome():
+    return "hello world!"
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -69,17 +45,11 @@ def login():
 
         if user:
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('user.index'))
 
     return render_template('login.html',
                            title='Sign In',
                            form=form)
-
-
-@app.route('/logout')
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
 
 
 @lm.user_loader
