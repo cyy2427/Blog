@@ -9,7 +9,11 @@
     {% endif %}
 </head>
 <body>
-    <div>app: <a href="/index">Home</a></div>
+    {% if user %}
+    <div><a href="/user">Home</a>|<a href="/user/logout">Logout</a></div>
+    {% else %}
+    <div><a href="/">Home</a></div>
+    {% endif %}
     <hr>
     {% with messages = get_flashed_messages() %}
     {% if messages %}

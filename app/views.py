@@ -11,7 +11,7 @@ app.register_blueprint(user)
 
 @app.route('/')
 def welcome():
-    return "hello world!"
+    return render_template('start.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
