@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, flash, redirect, session, url_for, request, g
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, logout_user
-from app import app, lm, db
-from app.forms import LoginForm, RegisterForm, PostForm
+from app import db
+from app.forms import PostForm
 from app.models import User, Post
 
 user = Blueprint('user', __name__, url_prefix='/user')
