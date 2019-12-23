@@ -11,10 +11,15 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     username = StringField('username', validators=[DataRequired('username is null')])
-    password1 = PasswordField('password', validators=[DataRequired('password is null')])
-    password2 = PasswordField('password', validators=[DataRequired('password is null')])
+    password1 = PasswordField('password1', validators=[DataRequired('password1 is null')])
+    password2 = PasswordField('password2', validators=[DataRequired('password2 is null')])
 
 
 class PostForm(FlaskForm):
     post = TextAreaField('Post:', validators=[DataRequired('post is null')])
+    submit = SubmitField('Submit')
+
+
+class ReviewForm(FlaskForm):
+    review = TextAreaField('Post:', validators=[DataRequired('review is null')])
     submit = SubmitField('Submit')
