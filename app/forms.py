@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField, TextAreaField, PasswordField
+from wtforms import StringField, BooleanField, SubmitField, TextAreaField, PasswordField, FileField
 from wtforms.validators import DataRequired
 
 
@@ -23,3 +23,8 @@ class PostForm(FlaskForm):
 class ReviewForm(FlaskForm):
     review = TextAreaField('Review:', validators=[DataRequired('review is null')])
     submit = SubmitField('Submit')
+
+
+class IconForm(FlaskForm):
+    icon = FileField('Choose File', validators=[DataRequired('No file selected')])
+    submit = SubmitField('Upload')

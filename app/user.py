@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, logout_user
-from app import db
-from app.forms import PostForm
+from app import db, icon
+from app.forms import PostForm, IconForm
 from app.models import User, Post
 
 user = Blueprint('user', __name__, url_prefix='/user')
@@ -54,3 +54,14 @@ def profile():
 def myposts():
     posts = Post.query.filter(User.username == current_user.username).all()
     return render_template('posts.html', posts=posts, user=current_user)
+
+
+@user.route('/profile/icon/upload', methods=['GET', 'POST'])
+@login_required
+def upload_icon():
+    form = IconForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        filename = icon.save(request.files['icon'], folder='icons')
+        flash('Icon uploaded.')
+    return render_template('upload_icon.html', form=form, user=current_user)
+
