@@ -21,5 +21,5 @@ class PostForm(FlaskForm):
 
 
 class ReviewForm(FlaskForm):
-    review = TextAreaField('Post:', validators=[DataRequired('review is null')])
+    review = TextAreaField('Review:', validators=[DataRequired('review is null')])
     submit = SubmitField('Submit')

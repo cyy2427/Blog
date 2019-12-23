@@ -1,0 +1,24 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div>{{ post_user.username }}</div>
+    <div><p>
+    {{ post.body }}
+    </p></div>
+    <hr>
+    <div>{% for review in reviews %}
+        <p>{{ loop.index }}楼 | {{ review.user_id }}</p>
+        <p>{{ review.body }}</p>
+    {% endfor %}</div>
+    <form action="" method="post" name="review">
+    {{form.hidden_tag()}}
+    <p>
+        {{form.review.label}}<br>
+        {{form.review}}<br>
+
+    </p>
+    <p>{{ form.submit }}</p>
+    </form>
+{% endblock %}

@@ -4,9 +4,11 @@ from app import app, lm, db
 from app.forms import LoginForm, RegisterForm
 from app.models import User
 from app.user import user
+from app.post import post
 
 
 app.register_blueprint(user)
+app.register_blueprint(post)
 
 
 @app.route('/')
@@ -46,6 +48,9 @@ def login():
         if user:
             login_user(user)
             return redirect(url_for('user.index'))
+        else:
+            flash('Incorrect username or password.')
+            return redirect(url_for('login'))
 
     return render_template('login.html',
                            title='Sign In',

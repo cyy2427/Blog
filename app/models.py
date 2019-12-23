@@ -33,6 +33,17 @@ class Post(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(150))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    reviews = db.relationship('Review', backref='post', lazy='dynamic')
 
     def __repr__(self):
-        return '<User %r>' % self.body
+        return '<Post %r>' % self.body
+
+
+class Review(db.Model):
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    body = db.Column(db.String(100))
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Review %r>' % self.body
