@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, logout_user
 from app import db, icon
@@ -30,6 +31,7 @@ def newpost():
         post = Post(body=post_body, user_id=current_user.user_id)
         db.session.add(post)
         db.session.commit()
+        db.session.close()
         flash("New post created successfully.")
         return redirect(url_for('user.index'))
 
@@ -62,6 +64,8 @@ def upload_icon():
     form = IconForm()
     if request.method == 'POST' and form.validate_on_submit():
         filename = icon.save(request.files['icon'], folder='icons')
-        flash('Icon uploaded.')
+        user = User.query.get(current_user.user_id)
+        user.icon_path = os.path.split(filename)[-1]
+        flash('Icon uploaded:' + result)
     return render_template('upload_icon.html', form=form, user=current_user)
 

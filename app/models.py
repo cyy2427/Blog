@@ -6,6 +6,7 @@ class User(db.Model, UserMixin):
     user_id = db.Column('id', db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), unique=True)
     password = db.Column(db.String(20))
+    icon_path = db.Column('icon', db.String(20), unique=True)
     posts = db.relationship('Post', backref='user', lazy='dynamic')
 
     __tablename__ = 'user'

@@ -30,6 +30,7 @@ def show_post(post_id):
         review = Review(body=review_body, user_id=current_user.user_id, post_id=post_id)
         db.session.add(review)
         db.session.commit()
+        db.session.close()
         flash('Review submitted.')
         return redirect(url_for('post.show_post', post_id=post_id))
     return render_template('show_post.html', form=form, post=target_post,
