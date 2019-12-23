@@ -10,7 +10,7 @@ post = Blueprint('post', __name__, url_prefix='/post')
 @post.route('/all')
 @login_required
 def all_post():
-    posts = Post.query.get().all()
+    posts = Post.query.all()
     return render_template('posts.html', posts=posts, user=current_user)
 
 
