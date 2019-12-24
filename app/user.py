@@ -66,6 +66,5 @@ def upload_icon():
         filename = icon.save(request.files['icon'], folder='icons')
         user = User.query.get(current_user.user_id)
         user.icon_path = os.path.split(filename)[-1]
-        flash('Icon uploaded:' + result)
     return render_template('upload_icon.html', form=form, user=current_user)
 
