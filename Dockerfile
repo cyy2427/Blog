@@ -10,4 +10,4 @@ RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple 
     && flask db migrate \
     && flask db upgrade
 
-CMD ["gunicorn", "helloflask:app"]
+CMD ["gunicorn", "app:app"]
