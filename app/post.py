@@ -10,7 +10,7 @@ post = Blueprint('post', __name__, url_prefix='/post')
 @post.route('/all')
 @login_required
 def all_post():
-    posts = Post.query.all()
+    posts = db.session.query(Post.body, User.username).all()
     return render_template('posts.html', posts=posts, user=current_user)
 
 
@@ -19,7 +19,7 @@ def all_post():
 def show_post(post_id):
     target_post = Post.query.get(post_id)
     post_user = User.query.get(target_post.user_id)
-    reviews = Review.query.filter(Review.post_id == post_id).all()
+    reviews = db.session.query(Review.body, User.username).filter(Review.post_id == post_id).all()
 
     form = ReviewForm()
     if request.method == 'POST':

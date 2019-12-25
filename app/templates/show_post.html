@@ -9,9 +9,11 @@
     </p></div>
     <hr>
     <div>{% for review in reviews %}
-        <p>{{ loop.index }}楼 | {{ review.user_id }}</p>
-        <p>{{ review.body }}</p>
+        <p>{{ loop.index }}楼 | {{ review[1] }}</p>
+        <p>{{ review[0] }}</p>
     {% endfor %}</div>
+    <hr>
+    <div>
     <form action="" method="post" name="review">
     {{form.hidden_tag()}}
     <p>
@@ -20,5 +22,5 @@
 
     </p>
     <p>{{ form.submit }}</p>
-    </form>
+    </form></div>
 {% endblock %}

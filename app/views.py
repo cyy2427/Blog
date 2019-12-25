@@ -49,8 +49,11 @@ def login():
         if user:
             login_user(user)
             return redirect(url_for('user.index'))
+        elif User.query.filter(User.username == form.username.data).first():
+            flash('Incorrect password.')
+            return redirect(url_for('login'))
         else:
-            flash('Incorrect username or password.')
+            flash('User does not exist.')
             return redirect(url_for('login'))
 
     return render_template('login.html',

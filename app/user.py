@@ -4,6 +4,7 @@ from flask_login import login_required, current_user, logout_user
 from app import db, icon
 from app.forms import PostForm, IconForm
 from app.models import User, Post
+from config import UPLOADED_ICON_DEST as uploads_path
 
 user = Blueprint('user', __name__, url_prefix='/user')
 
@@ -45,17 +46,18 @@ def logout():
     return redirect(url_for('login'))
 
 
-@user.route('/profile')
-@login_required
-def profile():
-    return render_template('profile.html', user=current_user)
-
-
 @user.route('/myposts')
 @login_required
 def myposts():
-    posts = Post.query.filter(User.username == current_user.username).all()
+    posts = db.session.query(Post.body, User.username).filter(User.username == current_user.username).all()
     return render_template('posts.html', posts=posts, user=current_user)
+
+
+@user.route('/profile')
+@login_required
+def profile():
+    full_icon_path = os.path.join(uploads_path, 'icons', User.query.get(current_user.user_id).icon_path)
+    return render_template('profile.html', user=current_user, icon_path=full_icon_path)
 
 
 @user.route('/profile/icon/upload', methods=['GET', 'POST'])
@@ -66,5 +68,8 @@ def upload_icon():
         filename = icon.save(request.files['icon'], folder='icons')
         user = User.query.get(current_user.user_id)
         user.icon_path = os.path.split(filename)[-1]
+        db.session.commit()
+        flash('Icon uploaded.')
+        return redirect(url_for('user.profile'))
     return render_template('upload_icon.html', form=form, user=current_user)
 
