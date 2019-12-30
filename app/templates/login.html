@@ -2,18 +2,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Sign In</h1>
-<form action="" method="post" name="login">
-    {{form.hidden_tag()}}
-    <p>
-        {{form.username.label}}<br>
-        {{form.username(size=80)}}<br>
-    </p>
-    <p>
-        {{ form.password.label }}<br>
-        {{ form.password(size=80) }}<br>
-    </p>
-    <p>{{form.remember_me}} Remember Me</p>
-    <p><input type="submit" value="Sign In"></p>
-</form>
+
+    <div class="container">
+    <div class="card">
+
+        <div class="card-body">
+            <h1 class="card-title">Sign In</h1>
+            <p class="card-text">
+                {% from 'bootstrap/form.html' import render_form %}
+
+                {{ render_form(form, form_type = "basic", button_map = {"login": "primary"}) }}
+            </p>
+
+        </div>
+    </div>
+    </div>
+
 {% endblock %}

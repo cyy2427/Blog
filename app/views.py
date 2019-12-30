@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, session, url_for, request, g
-from flask_login import login_user
+from flask_login import login_user, login_required, current_user
 from app import app, lm, db
 from app.forms import LoginForm, RegisterForm
 from app.models import User
@@ -12,8 +12,9 @@ app.register_blueprint(post)
 
 
 @app.route('/')
+@login_required
 def welcome():
-    return render_template('start.html')
+    return redirect(url_for('post.all_post'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -31,7 +32,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         db.session.close()
-        flash('successfully registered')
+        flash('Successfully registered.')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 

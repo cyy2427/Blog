@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -19,5 +20,7 @@ lm.init_app(app)
 
 icon = UploadSet('icon', IMAGES)
 configure_uploads(app, icon)
+
+bootstrap = Bootstrap(app)
 
 from app import views, models
