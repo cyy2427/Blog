@@ -32,7 +32,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         db.session.close()
-        flash('Successfully registered.')
+        flash('Successfully registered.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -51,10 +51,10 @@ def login():
             login_user(user)
             return redirect(url_for('user.index'))
         elif User.query.filter(User.username == form.username.data).first():
-            flash('Incorrect password.')
+            flash('Incorrect password.', 'danger')
             return redirect(url_for('login'))
         else:
-            flash('User does not exist.')
+            flash('User does not exist.', 'danger')
             return redirect(url_for('login'))
 
     return render_template('login.html',

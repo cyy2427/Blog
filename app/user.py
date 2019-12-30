@@ -15,7 +15,7 @@ def index():
     if current_user is not None:
         return render_template("start.html", user=current_user)
     else:
-        flash("Please login to access this page.")
+        flash('Please login to access this page.', 'info')
         return redirect(url_for('login'))
 
 
