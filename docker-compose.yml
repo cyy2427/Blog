@@ -1,0 +1,10 @@
+version: '3'
+services:
+  helloflask:
+    build: .
+    command: gunicorn -c gunicorn.py app:app
+    container_name: helloflask
+    environment:
+      FLASK_ENV: production
+      FLASK_APP: app
+    ports: "6666:6666"
