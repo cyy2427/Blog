@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_ckeditor import CKEditorField
 from wtforms import StringField, BooleanField, SubmitField, TextAreaField, PasswordField, FileField
 from wtforms.validators import DataRequired
 
@@ -18,7 +19,7 @@ class RegisterForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    post = TextAreaField('Post:', validators=[DataRequired('post is null')])
+    post = CKEditorField('Post:', validators=[DataRequired('post is null')])
     submit = SubmitField('Submit')
 
 

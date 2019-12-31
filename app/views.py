@@ -49,7 +49,7 @@ def login():
 
         if user:
             login_user(user)
-            return redirect(url_for('user.index'))
+            return redirect(url_for('post.all_post'))
         elif User.query.filter(User.username == form.username.data).first():
             flash('Incorrect password.', 'danger')
             return redirect(url_for('login'))

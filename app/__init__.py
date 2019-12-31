@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -18,9 +19,11 @@ lm = LoginManager()
 lm.login_view = "/login"
 lm.init_app(app)
 
+
 icon = UploadSet('icon', IMAGES)
 configure_uploads(app, icon)
 
 bootstrap = Bootstrap(app)
+ckeditor = CKEditor(app)
 
 from app import views, models
