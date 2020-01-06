@@ -2,15 +2,15 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user
 from app import db
 from app.forms import ReviewForm
-from app.models import User, Post, Review
+from app.models import User, Post, PostReview
 
 post = Blueprint('post', __name__, url_prefix='/post')
 
 
 @post.route('/all')
 @login_required
-def all_post():
-    posts = db.session.query(Post.body, User.username).all()
+def all_posts():
+    posts = db.session.query(Post.body, Post.datetime, User.username).all()
     return render_template('posts.html', posts=posts, user=current_user)
 
 
@@ -19,7 +19,7 @@ def all_post():
 def show_post(post_id):
     target_post = Post.query.get(post_id)
     post_user = User.query.get(target_post.user_id)
-    reviews = db.session.query(Review.body, User.username).filter(Review.post_id == post_id).all()
+    reviews = target_post.reviews
 
     form = ReviewForm()
     if request.method == 'POST':
@@ -27,7 +27,7 @@ def show_post(post_id):
             flash(form.errors)
 
         review_body = form.review.data
-        review = Review(body=review_body, user_id=current_user.user_id, post_id=post_id)
+        review = PostReview(body=review_body, user_id=current_user.user_id, post_id=post_id)
         db.session.add(review)
         db.session.commit()
         db.session.close()

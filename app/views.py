@@ -14,7 +14,7 @@ app.register_blueprint(post)
 @app.route('/')
 @login_required
 def welcome():
-    return redirect(url_for('post.all_post'))
+    return redirect(url_for('post.all_posts'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -28,8 +28,8 @@ def register():
             flash('passwords did not match')
             return redirect(render_template('register.html', title='Register', form=form))
 
-        user = User(username=form.username.data, password=form.password1.data)
-        db.session.add(user)
+        new_user = User(username=form.username.data, password=form.password1.data)
+        db.session.add(new_user)
         db.session.commit()
         db.session.close()
         flash('Successfully registered.', 'success')
@@ -49,7 +49,7 @@ def login():
 
         if user:
             login_user(user)
-            return redirect(url_for('post.all_post'))
+            return redirect(url_for('post.all_posts'))
         elif User.query.filter(User.username == form.username.data).first():
             flash('Incorrect password.', 'danger')
             return redirect(url_for('login'))

@@ -18,7 +18,7 @@
     <div class="navbar-nav">
     {% if user %}
         {{ render_nav_item('user.index', 'Home') }}
-        {{ render_nav_item('post.all_post', 'Posts') }}
+        {{ render_nav_item('post.all_posts', 'Posts') }}
         {{ render_nav_item('user.profile', 'Profile') }}
     {% else %}
         {{ render_nav_item('welcome', 'Home') }}

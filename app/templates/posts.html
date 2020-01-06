@@ -2,14 +2,38 @@
 
 {% block content %}
     <div class="container">
-    <div class="card">
-        {% for post in posts %}
-        <div class="card-body">
-            <p class="card-text">{{ post[0] }}</p>
-            <p class="card-text">{{ post[1] }}</p></div>
-        <hr>{% endfor %}
-    </div>
+        <div class="row">
+            <div class="col-9">
+                <div class="card">
+                    {% for post in posts %}
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <p class="card-text">{{ post[0] }}</p>
+                                    <p class="card-text">{{ post[1] }}</p>
+                                    <p class="card-text">{{ post[2] }}</p>
+                                </li>
+                            </ul>
 
+                        </div>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="\static\no-icon.jpg" class="card-img img-circle">
+                        <h2 class="card-title">{{ user.username }}</h2>
+                        <div class="row">
+                            <div class="col-6"><a href="#">Articles</a></div>
+                            <div class="col-6"><a href="#">Posts</a></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

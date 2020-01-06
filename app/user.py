@@ -56,8 +56,7 @@ def myposts():
 @user.route('/profile')
 @login_required
 def profile():
-    full_icon_path = os.path.join(uploads_path, 'icons', User.query.get(current_user.user_id).icon_path)
-    return render_template('profile.html', user=current_user, icon_path=full_icon_path)
+    return render_template('profile.html', user=current_user)
 
 
 @user.route('/profile/icon/upload', methods=['GET', 'POST'])

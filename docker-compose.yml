@@ -9,4 +9,4 @@ services:
       FLASK_APP: app
 
     ports:
-    - '6666:6666'
+    - '51000:5100'
