@@ -53,15 +53,14 @@ def myposts():
     return render_template('posts.html', posts=posts, user=current_user)
 
 
-@user.route('/profile')
+@user.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', user=current_user)
-
-
-@user.route('/profile/icon/upload', methods=['GET', 'POST'])
-@login_required
-def upload_icon():
+    if current_user.icon_path is None:
+        icon_path = None
+    else:
+        icon_folder = '/static/uploads/icons'
+        icon_path = os.path.join(icon_folder, current_user.icon_path)
     form = IconForm()
     if request.method == 'POST' and form.validate_on_submit():
         filename = icon.save(request.files['icon'], folder='icons')
@@ -70,5 +69,5 @@ def upload_icon():
         db.session.commit()
         flash('Icon uploaded.')
         return redirect(url_for('user.profile'))
-    return render_template('upload_icon.html', form=form, user=current_user)
+    return render_template('profile.html', user=current_user, icon_path=icon_path, form=form)
 

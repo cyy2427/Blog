@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from app import db
 from app.forms import ReviewForm
 from app.models import User, Post, PostReview
+import os
 
 post = Blueprint('post', __name__, url_prefix='/post')
 
@@ -10,8 +11,14 @@ post = Blueprint('post', __name__, url_prefix='/post')
 @post.route('/all')
 @login_required
 def all_posts():
+    if current_user.icon_path is None:
+        icon_path = None
+    else:
+        icon_folder = '/static/uploads/icons'
+        icon_path = os.path.join(icon_folder, current_user.icon_path)
     posts = db.session.query(Post.body, Post.datetime, User.username).all()
-    return render_template('posts.html', posts=posts, user=current_user)
+
+    return render_template('posts.html', posts=posts, user=current_user, icon_path=icon_path)
 
 
 @post.route('/<int:post_id>', methods=['GET', 'POST'])
