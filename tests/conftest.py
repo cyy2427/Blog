@@ -8,10 +8,12 @@ from app.models import *
 
 @pytest.fixture
 def client():
+    # 设置测试数据库路径和测试环境
     app.config['WTF_CSRF_ENABLED'] = False
     app.config['TEST'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
 
+    # 初始化测试数据库
     with app.test_client() as client:
         with app.app_context():
             db.drop_all()
@@ -22,6 +24,7 @@ def client():
         yield client
 
 
+# 测试环境下用户登录登出类
 class AuthActions(object):
     def __init__(self, client):
         self._client = client

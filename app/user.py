@@ -6,9 +6,11 @@ from app.forms import PostForm, IconForm
 from app.models import User, Post
 from app.utils import get_icon_path
 
+# 用户蓝图
 user = Blueprint('user', __name__, url_prefix='/user')
 
 
+# 首页
 @user.route('/')
 @login_required
 def index():
@@ -39,6 +41,7 @@ def newpost():
     return render_template('newpost.html', title='New Post', form=form, user=current_user)
 
 
+# 用户登出
 @user.route('/logout')
 @login_required
 def logout():
@@ -53,10 +56,13 @@ def myposts():
     return render_template('posts.html', posts=posts, user=current_user)
 
 
+# 用户个人资料
 @user.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     icon_path = get_icon_path(current_user.icon_path)
+
+    # 头像上传
     form = IconForm()
     if request.method == 'POST' and form.validate_on_submit():
         filename = icon.save(request.files['icon'], folder='icons')

@@ -7,18 +7,20 @@ from app.user import user
 from app.post import post
 from app.article import article
 
-
+# 主视图
 app.register_blueprint(user)
 app.register_blueprint(post)
 app.register_blueprint(article)
 
 
+# 主页
 @app.route('/')
 @login_required
 def welcome():
     return redirect(url_for('post.all_posts'))
 
 
+# 用户注册
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -26,6 +28,8 @@ def register():
         if not form.validate_on_submit():
             flash(form.errors)
             return redirect(render_template('register.html', title='Register', form=form))
+
+        # 密码两次输入验证
         if form.password1.data != form.password2.data:
             flash('passwords did not match')
             return redirect(render_template('register.html', title='Register', form=form))
@@ -39,6 +43,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
+# 用户登录
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()

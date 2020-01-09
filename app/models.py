@@ -3,6 +3,9 @@ from app import db
 from datetime import datetime
 
 
+# 数据库表格：含用户表，长/短文本表，长/短文本评论表
+
+# 用户表：用户id，用户名，密码，个人信息（性别、昵称、头像路径、个性签名），长/短文本外键（relationship）
 class User(db.Model, UserMixin):
     user_id = db.Column('id', db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -35,6 +38,7 @@ class User(db.Model, UserMixin):
         return '<User %r>' % self.username
 
 
+# 短/长文本表：文本id，内容，作者用户id，发布时间，评论（relationship）；其中长文本还有标题字段
 class Post(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(150), nullable=False)
@@ -55,6 +59,7 @@ class Article(db.Model):
     reviews = db.relationship('ArticleReview', backref='article')
 
 
+# 短/长文本评论表：评论id，内容，对应文本id和作者用户id，发布时间
 class ArticleReview(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(100), nullable=False)

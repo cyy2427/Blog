@@ -5,9 +5,11 @@ from app.forms import ReviewForm, ArticleForm
 from app.models import User, Article, ArticleReview
 from app.utils import *
 
+# 长文本（文章）内容蓝图
 article = Blueprint('article', __name__, url_prefix='/article')
 
 
+# 文章列表显示（按时间倒叙）
 @article.route('/all')
 @login_required
 def all_articles():
@@ -17,6 +19,7 @@ def all_articles():
     return render_template('articles.html', user=current_user, icon_path=icon_path, articles=articles)
 
 
+# 发布新文章
 @article.route('/new', methods=['GET', 'POST'])
 @login_required
 def write_article():
@@ -33,6 +36,7 @@ def write_article():
     return render_template('new_article.html', user=current_user, form=form)
 
 
+# 文章详情（根据文章id查找）
 @article.route('/<int:article_id>', methods=['GET', 'POST'])
 @login_required
 def show_article(article_id):
@@ -43,7 +47,7 @@ def show_article(article_id):
     review_models = ArticleReview.query.order_by(ArticleReview.datetime.desc()).all()
     reviews = models_to_json(review_models, 'body', 'datetime')
 
-
+    # 评论发表和提交
     form = ReviewForm()
     if request.method == 'POST':
         if not form.validate_on_submit():

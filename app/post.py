@@ -5,9 +5,11 @@ from app.forms import ReviewForm
 from app.models import User, Post, PostReview
 from app.utils import *
 
+# 短文本蓝图
 post = Blueprint('post', __name__, url_prefix='/post')
 
 
+# 短文本列表显示（按时间倒序）
 @post.route('/all')
 @login_required
 def all_posts():
@@ -17,6 +19,7 @@ def all_posts():
     return render_template('posts.html', posts=posts, user=current_user, icon_path=icon_path)
 
 
+# 短文本详情显示（根据id）
 @post.route('/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def show_post(post_id):
@@ -26,6 +29,7 @@ def show_post(post_id):
     icon_path = get_icon_path(post_user.icon_path)
     rv_count = len(reviews)
 
+    # 评论发布
     form = ReviewForm()
     if request.method == 'POST':
         if not form.validate_on_submit():
