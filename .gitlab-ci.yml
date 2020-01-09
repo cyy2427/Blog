@@ -4,11 +4,10 @@ stages:
   - deploy
   
 test:
-
   stage: test
   image: python:3.7.5
-  before-script:
   
+  before-script:
     - pip -V
     - pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
     
