@@ -16,6 +16,27 @@
 
 
     <div class="card">
+        <div class="card-header">
+            {% if rv_count <= 1 %}
+            {{ rv_count }}  Review
+            {% else %}
+            {{ rv_count }}  Reviews
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% for review in reviews %}
+                <div class="media p-3 bg-white">
+                    <img class="align-self-top mr-3" style="width:60px" src={{ review.icon_path }}>
+                    <div class="media-body">
+                        <h4>{{ review.username }}</h4>
+                        <small>{{ review.datetime }}</small>
+                        <p>{{ review.body }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="card">
         <div class="card-body">
             {% from 'bootstrap/form.html' import render_form %}
             {{ render_form(form, form_type = "basic", button_map = {"submit": "primary"}) }}

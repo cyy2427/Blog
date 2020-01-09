@@ -46,6 +46,7 @@ def show_article(article_id):
     author = User.query.get(target_article.user_id)
     review_models = ArticleReview.query.order_by(ArticleReview.datetime.desc()).all()
     reviews = models_to_json(review_models, 'body', 'datetime')
+    rv_count = len(reviews)
 
     # 评论发表和提交
     form = ReviewForm()
@@ -62,4 +63,4 @@ def show_article(article_id):
         return redirect(url_for('article.show_article', article_id=article_id))
 
     return render_template('show_article.html', user=current_user, article=target_article, author=author,
-                           form=form, reviews=reviews)
+                           form=form, reviews=reviews, rv_count=rv_count)
