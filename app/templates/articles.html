@@ -1,25 +1,22 @@
 {% extends "base.html" %}
 
+
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-9">
-                <ul class="list-group">
-                    {% for post in posts %}
-                        <li class="list-group-item">
-                            <div class="media p-3 bg-white">
-                                <img class="align-self-top mr-3 rounded-circle" style="width:60px" src={{ post.icon_path }}>
-                                <div class="media-body">
-                                    <h4>{{ post.username }}</h4>
-                                    <small>{{ post.datetime }}</small>
-                                    <p>{{ post.body }}</p>
-                                </div>
-                            </div>
-                        </li>
-
+                <ul class="list-group"></ul>
+                    {% for article in articles %}
+                    <li class="list-group-item" >
+                        <h3>{{ article.title }}</h3>
+                        <div class="self-text-overflow">
+                            {{ article.body | safe}}
+                        </div>
+                    </li>
                     {% endfor %}
-                </ul>
             </div>
+
+
             <div class="col-3">
                 <div class="card">
                     <div class="row">
@@ -31,7 +28,6 @@
                         </div>
                     </div>
                 </div>
-                <br>
                 <div class="card">
                     <div class="card-body">
                         {% if icon_path is none %}
@@ -39,16 +35,17 @@
                         {% else %}
                         <img src={{ icon_path }} class="card-img">
                         {% endif %}
-                        <h2 class="card-title text-center">{{ user.username }}</h2>
+                        <h2 class="card-title">{{ user.username }}</h2>
                         <div class="row">
-                            <div class="col-6 text-center"><a href="#">Articles</a></div>
-                            <div class="col-6 text-center"><a href="#">Posts</a></div>
+                            <div class="col-6"><a href="#">Articles</a></div>
+                            <div class="col-6"><a href="#">Posts</a></div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
 
 {% endblock %}

@@ -8,7 +8,11 @@
     {% else %}
     <title>app</title>
     {% endif %}
+
     {{ bootstrap.load_css() }}
+    <link href={{ url_for('static', filename='self-text-overflow.css') }} rel="stylesheet">
+
+
 </head>
 <body class="bg-light">
     {% from 'bootstrap/nav.html' import render_nav_item %}
@@ -18,6 +22,7 @@
     <div class="navbar-nav">
     {% if user %}
         {{ render_nav_item('user.index', 'Home') }}
+        {{ render_nav_item('article.all_articles', 'Articles') }}
         {{ render_nav_item('post.all_posts', 'Posts') }}
         {{ render_nav_item('user.profile', 'Profile') }}
     {% else %}

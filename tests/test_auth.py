@@ -25,7 +25,7 @@ def test_login(client, auth):
     assert get_response.status_code == 200
 
     login_response = auth.login()
-    assert url_for('post.all_post') in login_response.headers['Location']
+    assert url_for('post.all_posts') in login_response.headers['Location']
     assert current_user.username == 'test'
 
 

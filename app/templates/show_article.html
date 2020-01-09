@@ -1,0 +1,24 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{ target_article.title }}</h1>
+            <div class="card-text">{{ author.username }}</div>
+            <div class="card-text">
+            <p>{{ target_article.body | safe}}</p></div>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-body">
+            {% from 'bootstrap/form.html' import render_form %}
+            {{ render_form(form, form_type = "basic", button_map = {"submit": "primary"}) }}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -5,10 +5,12 @@ from app.forms import LoginForm, RegisterForm
 from app.models import User
 from app.user import user
 from app.post import post
+from app.article import article
 
 
 app.register_blueprint(user)
 app.register_blueprint(post)
+app.register_blueprint(article)
 
 
 @app.route('/')

@@ -19,7 +19,13 @@ class RegisterForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    post = CKEditorField('Post:', validators=[DataRequired('post is null')])
+    post = TextAreaField('Post:', validators=[DataRequired('post is null')])
+    submit = SubmitField('Submit')
+
+
+class ArticleForm(FlaskForm):
+    title = StringField('Title:', validators=[DataRequired('title is null')])
+    body = CKEditorField(validators=[DataRequired('body is null')])
     submit = SubmitField('Submit')
 
 

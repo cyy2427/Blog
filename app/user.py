@@ -4,7 +4,7 @@ from flask_login import login_required, current_user, logout_user
 from app import db, icon
 from app.forms import PostForm, IconForm
 from app.models import User, Post
-from config import UPLOADED_ICON_DEST as uploads_path
+from app.utils import get_icon_path
 
 user = Blueprint('user', __name__, url_prefix='/user')
 
@@ -56,11 +56,7 @@ def myposts():
 @user.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    if current_user.icon_path is None:
-        icon_path = None
-    else:
-        icon_folder = '/static/uploads/icons'
-        icon_path = os.path.join(icon_folder, current_user.icon_path)
+    icon_path = get_icon_path(current_user.icon_path)
     form = IconForm()
     if request.method == 'POST' and form.validate_on_submit():
         filename = icon.save(request.files['icon'], folder='icons')
