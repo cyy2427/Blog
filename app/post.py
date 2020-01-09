@@ -12,8 +12,8 @@ post = Blueprint('post', __name__, url_prefix='/post')
 @login_required
 def all_posts():
     icon_path = get_icon_path(current_user.icon_path)
-    posts = models_to_json(Post.query.all(), 'body', 'datetime')
-
+    posts = models_to_json(Post.query.order_by(Post.datetime.desc()).all(),
+                           'body', 'datetime', 'id')
     return render_template('posts.html', posts=posts, user=current_user, icon_path=icon_path)
 
 

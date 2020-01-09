@@ -7,27 +7,32 @@
             <div class="col-9">
                 <ul class="list-group"></ul>
                     {% for article in articles %}
-                    <li class="list-group-item" >
-                        <h3>{{ article.title }}</h3>
-                        <div class="self-text-overflow">
-                            {{ article.body | safe}}
-                        </div>
-                    </li>
+                    <div class="list-group-item" >
+                        <a class='text-dark' href="{{ url_for('article.show_article', article_id=article.id)}}">
+                            <h4>{{ article.title }}</h4>
+                        </a>
+
+                        <div class="self-text-overflow">{{ article.body | safe}}</div>
+                        <div>{{ article.username }}  <small class="text-muted">{{ article.datetime }}</small></div>
+                    </div>
                     {% endfor %}
             </div>
 
 
             <div class="col-3">
                 <div class="card">
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="/article/new" class="card-text">New Article</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="/user/newpost" class="card-text">New Post</a>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 text-center card-text">
+                                <a href="/article/new">New Article</a>
+                            </div>
+                            <div class="col-6 text-center card-text">
+                                <a href="/user/newpost">New Post</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="card">
                     <div class="card-body">
                         {% if icon_path is none %}
@@ -35,10 +40,10 @@
                         {% else %}
                         <img src={{ icon_path }} class="card-img">
                         {% endif %}
-                        <h2 class="card-title">{{ user.username }}</h2>
+                        <h2 class="card-title text-center">{{ user.username }}</h2>
                         <div class="row">
-                            <div class="col-6"><a href="#">Articles</a></div>
-                            <div class="col-6"><a href="#">Posts</a></div>
+                            <div class="col-6 text-center"><a href="#">Articles</a></div>
+                            <div class="col-6 text-center"><a href="#">Posts</a></div>
                         </div>
                     </div>
                 </div>

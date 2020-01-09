@@ -11,7 +11,9 @@
                                 <img class="align-self-top mr-3 rounded-circle" style="width:60px" src={{ post.icon_path }}>
                                 <div class="media-body">
                                     <h4>{{ post.username }}</h4>
-                                    <small>{{ post.datetime }}</small>
+                                    <a class='text-muted small' href={{ url_for('post.show_post', post_id=post.id) }}>
+                                        {{ post.datetime }}
+                                    </a>
                                     <p>{{ post.body }}</p>
                                 </div>
                             </div>
@@ -22,12 +24,14 @@
             </div>
             <div class="col-3">
                 <div class="card">
-                    <div class="row">
-                        <div class="col-6">
-                            <a href="/article/new" class="card-text">New Article</a>
-                        </div>
-                        <div class="col-6">
-                            <a href="/user/newpost" class="card-text">New Post</a>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6 text-center card-text">
+                                <a href="/article/new">New Article</a>
+                            </div>
+                            <div class="col-6 text-center card-text">
+                                <a href="/user/newpost">New Post</a>
+                            </div>
                         </div>
                     </div>
                 </div>

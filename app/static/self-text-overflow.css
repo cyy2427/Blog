@@ -2,4 +2,5 @@
     text-overflow: ellipsis ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width:100%
 }
