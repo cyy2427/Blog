@@ -1,6 +1,8 @@
 import os
+
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, logout_user
+
 from app import db, icon
 from app.forms import PostForm, IconForm
 from app.models import User, Post

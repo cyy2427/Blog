@@ -44,7 +44,8 @@ def show_article(article_id):
     if target_article is None:
         abort(404)
     author = User.query.get(target_article.user_id)
-    review_models = ArticleReview.query.order_by(ArticleReview.datetime.desc()).all()
+
+    review_models = target_article.reviews
     reviews = models_to_json(review_models, 'body', 'datetime')
     rv_count = len(reviews)
 
