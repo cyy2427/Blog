@@ -35,9 +35,9 @@
 | `.register`| `GET`,`POST` | `/logout`| 用户注册 |
 | `post.all_posts`| `GET`| `/post/all` | 展示所有短文本 |
 | `post.show_post` | `GET`,`POST` | `/post/<post_id>` | 展示单个短文本及评论 |
-| `user.newpost` | `GET`,`POST` | `/user/newpost` | 发布短文本（URL和方法待移至post蓝图）|
+| `post.new` | `GET`,`POST` | `/post/new` | 发布短文本（URL和方法待移至post蓝图）|
 | `article.all_articles ` | `GET` | `/article/all` | 展示所有短文本 |
-| `article.write_article` |`GET`,`POST`| `/article/new` | 发布长文本（文章）|
+| `article.new` |`GET`,`POST`| `/article/new` | 发布长文本（文章）|
 | `article.show_article` | `GET`,`POST`| `/article/<article_id>` | 展示单个长文本及评论 |
 | `user.profile` | `GET`,`POST` | `/user/profile` | 个人资料管理 |
 | `user.logout` | `GET` | `/user/logout` | 用户登出 |
