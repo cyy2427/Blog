@@ -55,11 +55,9 @@ class Article(Text):
 
 
 class PostReview(Text):
-    body = db.Column(db.String(), nullable=False)
     post_id = db.Column(db.ForeignKey('post.id'), nullable=False)
 
 
 class ArticleReview(Text):
-    body = db.Column(db.String(), nullable=False)
     article_id = db.Column(db.ForeignKey('article.id'), nullable=False)
 
