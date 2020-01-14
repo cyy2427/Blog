@@ -1,30 +1,38 @@
-import os
+from importlib import import_module
 
 from flask import Flask
-from flask_bootstrap import Bootstrap
-from flask_ckeditor import CKEditor
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from flask_login import LoginManager
-from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_uploads import configure_uploads
+
+from app.views import blueprints
+from app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
 
 
-basedir = os.path.abspath(os.path.dirname(__file__))
+def load_config_class(config_name):
+    config_class_name = '%sConfig' % config_name.capitalize()
+    app_name = __name__
+    config_module = import_module('%s.config.%s' % (app_name, config_name))
+    config_class = getattr(config_module, config_class_name, None)
+    return config_class
 
 
-app = Flask(__name__)
-app.config.from_object('config')
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-lm = LoginManager()
-lm.login_view = "/login"
-lm.init_app(app)
+def create_app(config_name):
+    app = Flask(__name__)
+    config_class = load_config_class(config_name)
+    app.config.from_object(config_class)
+    configure_extensions(app)
+    register_blueprints(app)
+    return app
 
 
-icon = UploadSet('icon', IMAGES)
-configure_uploads(app, icon)
+def configure_extensions(app):
+    db.init_app(app)
+    migrate.init_app(app, db)
+    lm.init_app(app)
+    bootstrap.init_app(app)
+    ckeditor.init_app(app)
+    configure_uploads(app, icon)
 
-bootstrap = Bootstrap(app)
-ckeditor = CKEditor(app)
 
-from app import views, models
+def register_blueprints(app):
+    for blueprint, url_prefix in blueprints:
+        app.register_blueprint(blueprint, url_prefix=url_prefix)

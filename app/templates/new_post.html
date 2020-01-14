@@ -1,0 +1,20 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">New Post</h1>
+            <p class="card-text">
+                {% from 'bootstrap/form.html' import render_form %}
+
+                {{ render_form(form, form_type = "basic", button_map = {"submit": "primary"}) }}
+            </p>
+        </div>
+    </div>
+    </div>
+
+
+
+{% endblock %}
