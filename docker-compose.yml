@@ -6,7 +6,7 @@ services:
     container_name: helloflask
     environment:
       FLASK_ENV: production
-      FLASK_APP: app
+      FLASK_APP: app:create_app('dev')
 
     ports:
     - '9100:5100'
