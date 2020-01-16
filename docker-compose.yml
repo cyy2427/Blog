@@ -2,7 +2,7 @@ version: '3'
 services:
   helloflask:
     build: .
-    command: gunicorn -c gunicorn.py app:app
+    command: gunicorn -c gunicorn.py flask_app:app
     container_name: helloflask
     environment:
       APP_CFG: dev
