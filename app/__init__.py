@@ -1,17 +1,13 @@
-from importlib import import_module
-
 from flask import Flask
 from flask_uploads import configure_uploads
 
+from app.config import app_config
 from app.views import blueprints
 from app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
 
 
 def load_config_class(config_name):
-    config_class_name = '%sConfig' % config_name.capitalize()
-    app_name = __name__
-    config_module = import_module('%s.config.%s' % (app_name, config_name))
-    config_class = getattr(config_module, config_class_name, None)
+    config_class = app_config[config_name]()
     return config_class
 
 
@@ -36,3 +32,4 @@ def configure_extensions(app):
 def register_blueprints(app):
     for blueprint, url_prefix in blueprints:
         app.register_blueprint(blueprint, url_prefix=url_prefix)
+

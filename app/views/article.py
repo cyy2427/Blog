@@ -14,7 +14,7 @@ article = Blueprint('article', __name__)
 @article.route('/all')
 @login_required
 def all_articles():
-    articles = Article.query.order_by(Article.datetime.desc()).all()
+    articles = Article.query.order_by(Article._datetime.desc()).all()
     return render_template('articles.html', articles=articles, user=current_user)
 
 
@@ -26,7 +26,7 @@ def new():
     if request.method == 'POST':
         title = form.title.data
         body = form.body.data
-        new_article = Article(title=title, body=body, user_id=current_user.user_id)
+        new_article = Article(title=title, body=body, user_id=current_user.id)
         db.session.add(new_article)
         db.session.commit()
         db.session.close()

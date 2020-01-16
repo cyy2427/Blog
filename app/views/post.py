@@ -19,17 +19,17 @@ def new():
             db.session.add(new_post)
             db.session.commit()
             db.session.close()
-            return redirect(url_for('post.all'))
+            return redirect(url_for('post.all_posts'))
 
-    return render_template('new_post.html')
+    return render_template('new_post.html', form=form, user=current_user)
 
 
 # 短文本列表显示（按时间倒序）
 @post.route('/all')
 @login_required
 def all_posts():
-    posts = Post.query.order_by(Post.datetime.desc()).all()
-    return render_template('posts.html', posts=post, user=current_user)
+    posts = Post.query.order_by(Post._datetime.desc()).all()
+    return render_template('posts.html', posts=posts, user=current_user)
 
 
 # 短文本详情显示（根据id）
@@ -48,7 +48,7 @@ def show_post(post_id):
         if not form.validate_on_submit():
             flash(form.errors)
 
-        review_body = form.review.data
+        review_body = form.body.data
         review = PostReview(body=review_body, user_id=current_user.id, post_id=post_id)
         db.session.add(review)
         db.session.commit()

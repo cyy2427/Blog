@@ -12,7 +12,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), unique=True, nullable=False)
     sex = db.Column(db.Boolean)
     nickname = db.Column(db.String(10), unique=True)
-    icon_path = db.Column('icon', db.String(20), unique=True)
+    _icon_path = db.Column('icon', db.String(20), unique=True)
     signature = db.Column(db.String(25))
     posts = db.relationship('Post', backref='user')
     articles = db.relationship('Article', backref='user')
@@ -24,15 +24,15 @@ class User(db.Model, UserMixin):
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def check_password(self, password):
-        return check_password_hash(self.__password, password)
+    def check_password(self, pw):
+        return check_password_hash(self.__password, pw)
 
     @property
     def icon_path(self):
-        if self.icon_path is None:
-            return '/static/uploads/no-icon.jpg'
+        if self._icon_path is None:
+            return '/static/no-icon.jpg'
         else:
-            return os.path.join('/static/uploads/icons', self.icon_path)
+            return os.path.join('/static/uploads/icons', self._icon_path)
 
 
 

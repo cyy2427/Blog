@@ -12,7 +12,7 @@ migrate = Migrate()
 lm = LoginManager()
 lm.login_view = '/login'
 
-icon = UploadSet('icon')
+icon = UploadSet('icon', IMAGES)
 
 ckeditor = CKEditor()
 bootstrap = Bootstrap()

@@ -1,4 +1,4 @@
-from app.models import Post, PostReview
+from app.models.text import Post, PostReview
 
 
 def test_posts(client, auth):
@@ -11,10 +11,10 @@ def test_posts(client, auth):
 def test_newpost(client, auth):
     auth.login()
 
-    get_response = client.get('user/newpost')
+    get_response = client.get('post/new')
     assert get_response.status_code == 200
 
-    post_response = client.post('user/newpost', data={'post': 'test post'})
+    post_response = client.post('post/new', data={'body': 'test post'})
     assert post_response.status_code == 302
     post = Post.query.get(1)
     assert post.user_id == 1
@@ -28,8 +28,8 @@ def test_newpost(client, auth):
 def test_review(client, auth):
     auth.login()
 
-    post_response = client.post('user/newpost', data={'post': 'test post'})
-    review_response = client.post('post/1', data={'review': 'test review'})
+    post_response = client.post('post/new', data={'body': 'test post'})
+    review_response = client.post('post/1', data={'body': 'test review'})
     review = PostReview.query.get(1)
     assert review.user_id == 1
     assert review.post_id == 1

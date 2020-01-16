@@ -13,7 +13,7 @@ class Text(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     body = db.Column(db.String(), nullable=True)
-    datetime = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    _datetime = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
     @declared_attr
     def user_id(self):
@@ -26,7 +26,7 @@ class Text(db.Model):
 
     @property
     def datetime(self):
-        return self.datetime.strftime('%Y-%m-%d %H:%M')
+        return self._datetime.strftime('%Y-%m-%d %H:%M')
 
     @property
     def username(self):

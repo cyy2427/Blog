@@ -8,11 +8,7 @@
             <div class="row">
                 <div class="col-3">
                     <a href="profile/icon/upload" data-toggle="modal" data-target="#myModal">
-                        {% if icon_path is none %}
-                        <img src="\static\no-icon.jpg" class="img-thumbnail" height="128" width="128">
-                        {% else %}
-                        <img src={{ icon_path }} class="img-thumbnail" height="128" width="128">
-                        {% endif %}
+                        <img src={{current_user.icon_path}} class="card-img">
                     </a>
                 </div>
                 <div class="col-9">

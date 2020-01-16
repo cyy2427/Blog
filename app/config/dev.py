@@ -1,9 +1,9 @@
 import os
 
 
-class DevConfig:
+class BaseConfig:
 
-    DEBUG = True
+    DEBUG = False
 
     POSTGRES_HOST = '172.16.0.5'
     POSTGRES_PORT = '54322'
@@ -12,7 +12,7 @@ class DevConfig:
     POSTGRES_DB = 'helloflask'
     POSTGRES_TEST_DB = 'helloflask_test'
 
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_DATABASE_URI = 'postgresql://%s:%s@%s:%s/%s'\
                               % (POSTGRES_USER, POSTGRES_PW, POSTGRES_HOST,
                                  POSTGRES_PORT, POSTGRES_DB)
@@ -20,8 +20,22 @@ class DevConfig:
     CSRF_ENABLED = False
     WTF_CSRF_ENABLED = False
     SECRET_KEY = os.urandom(666)
-    RECAPTCHA_PUBLIC_KEY = os.urandom(110)
-    RECAPTCHA_PRIVATE_KEY = os.urandom(110)
 
-    UPLOADED_ICON_DEST = '/static/uploads/'
+    UPLOADED_ICON_DEST = 'app/static/uploads/'
     UPLOADED_ICON_ALLOW = 'IMAGES'
+    CKEDITOR_SERVE_LOCAL = True
+
+
+class DevConfig(BaseConfig):
+    FLASK_ENV = 'development'
+    DEBUG = True
+
+
+class TestConfig(BaseConfig):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = 'postgresql://%s:%s@%s:%s/%s' \
+                              % (BaseConfig.POSTGRES_USER,
+                                 BaseConfig.POSTGRES_PW,
+                                 BaseConfig.POSTGRES_HOST,
+                                 BaseConfig.POSTGRES_PORT,
+                                 BaseConfig.POSTGRES_TEST_DB)

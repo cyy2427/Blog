@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/', methods=['GET'])
 @login_required
 def home():
-    return redirect('post.all_posts')
+    return redirect(url_for('post.all_posts'))
 
 
 @main.route('/login', methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def login():
         if user is None:
             flash('User does not exist.', 'danger')
             return redirect(url_for('main.login'))
-        elif user.check_password:
+        elif user.check_password(form.password.data):
             login_user(user)
             return redirect(url_for('main.home'))
         else:
@@ -47,7 +47,7 @@ def register():
             flash('Username already exists.', 'danger')
             return redirect(url_for('main.register'))
 
-        new_user = User(username=form.data.username, password=form.data.password)
+        new_user = User(username=form.username.data, password=form.password.data)
         db.session.add(new_user)
         db.session.commit()
         db.session.close()

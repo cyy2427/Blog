@@ -13,16 +13,15 @@ user = Blueprint('user', __name__)
 @login_required
 def profile():
     form = IconForm()
-    icon_path = current_user.get_icon_path()
 
     if request.method == 'POST':
         if form.validate_on_submit():
             filename = icon.save(request.files['icon'], folder='icons')
-        current_user.icon_path = os.path.split(filename)[-1]
-        db.session.commit()
-        flash('Icon uploaded.')
-        return redirect(url_for('user.profile'))
-    return render_template('profile.html', user=current_user, icon_path=icon_path, form=form)
+            current_user._icon_path = os.path.split(filename)[-1]
+            db.session.commit()
+            flash('Icon uploaded.')
+            return redirect(url_for('user.profile'))
+    return render_template('profile.html', user=current_user, form=form)
 
 
 @user.route('/logout')

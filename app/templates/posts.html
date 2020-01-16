@@ -30,7 +30,7 @@
                                 <a href="/article/new">New Article</a>
                             </div>
                             <div class="col-6 text-center card-text">
-                                <a href="/user/newpost">New Post</a>
+                                <a href="/post/new">New Post</a>
                             </div>
                         </div>
                     </div>
@@ -38,11 +38,7 @@
                 <br>
                 <div class="card">
                     <div class="card-body">
-                        {% if icon_path is none %}
-                        <img src="\static\no-icon.jpg" class="card-img">
-                        {% else %}
-                        <img src={{ icon_path }} class="card-img">
-                        {% endif %}
+                        <img src={{user.icon_path}} class="card-img">
                         <h2 class="card-title text-center">{{ user.username }}</h2>
                         <div class="row">
                             <div class="col-6 text-center"><a href="#">Articles</a></div>
