@@ -2,12 +2,12 @@ version: '3'
 services:
   helloflask:
     build: .
-    command: gunicorn -c gunicorn.py app:create_app(CFG)
+    command: gunicorn -c gunicorn.py app:app
     container_name: helloflask
     environment:
-      CFG: dev
+      APP_CFG: dev
       FLASK_ENV: production
-      FLASK_APP: app:create_app(CFG)
+      FLASK_APP: app.py
 
     ports:
     - '9100:5100'
