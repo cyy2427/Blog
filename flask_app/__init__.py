@@ -1,14 +1,16 @@
+import importlib
+
 from flask import Flask
 from flask_uploads import configure_uploads
 
-from app.config import app_config
-from app.views import blueprints
-from app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
-from app.models.user import User
+from flask_app.config import app_config
+from flask_app.views import blueprints
+from flask_app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
+from flask_app.models.user import User
 
 
 def load_config_class(config_name):
-    config_class = app_config[config_name]()
+    config_class = app_config[config_name]
     return config_class
 
 

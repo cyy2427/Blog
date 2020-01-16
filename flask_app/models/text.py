@@ -2,8 +2,8 @@ from datetime import datetime
 
 from sqlalchemy.ext.declarative import declared_attr
 
-from app.extensions import db
-from app.models.user import User
+from flask_app.extensions import db
+from flask_app.models.user import User
 
 
 class Text(db.Model):

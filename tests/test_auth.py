@@ -1,7 +1,7 @@
 from flask import url_for
 from flask_login import current_user
 
-from app.models.user import User
+from flask_app.models.user import User
 
 
 def register(client, username, password):
