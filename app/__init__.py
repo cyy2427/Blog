@@ -4,6 +4,7 @@ from flask_uploads import configure_uploads
 from app.config import app_config
 from app.views import blueprints
 from app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
+from app.models.user import User
 
 
 def load_config_class(config_name):
@@ -27,6 +28,10 @@ def configure_extensions(app):
     bootstrap.init_app(app)
     ckeditor.init_app(app)
     configure_uploads(app, icon)
+
+    @lm.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
 
 def register_blueprints(app):

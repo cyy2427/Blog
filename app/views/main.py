@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_user, login_required
 
-from app.extensions import lm, db
+from app.extensions import db
 from app.forms.user import LoginForm, RegisterForm
 from app.models.user import User
 
@@ -54,11 +54,6 @@ def register():
         flash('Successfully registered.', 'success')
         return redirect(url_for('main.login'))
     return render_template('register.html', title='Register', form=form)
-
-
-@lm.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 
 
