@@ -1,3 +1,5 @@
+import os
+
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from flask_login import login_required, current_user
 
@@ -63,3 +65,11 @@ def show_article(article_id):
     return render_template('show_article.html', user=current_user,
                            article=target_article, form=form,
                            reviews=reviews, rv_count=rv_count)
+
+
+@article.errorhandler(404)
+def article_not_found(error):
+    if os.path.split(request.path)[-1].isdigit():
+        message = {'name': 'Article not found.',
+                   'description': 'Please check your access to right article.'}
+    return render_template('error.html', error=message)

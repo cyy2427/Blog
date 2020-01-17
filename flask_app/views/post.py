@@ -1,3 +1,5 @@
+import os
+
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from flask_login import login_required, current_user
 
@@ -59,6 +61,13 @@ def show_post(post_id):
                            post=target_post, user=current_user,
                            reviews=reviews, rv_count=rv_count)
 
+
+@post.errorhandler(404)
+def post_not_found(error):
+    if os.path.split(request.path)[-1].isdigit():
+        message = {'name': 'Post not found.',
+                   'description': 'Please check your access to right post.'}
+    return render_template('error.html', error=message)
 
 
 
