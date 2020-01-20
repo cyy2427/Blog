@@ -63,8 +63,8 @@ def review_article(article_id):
     if not form.validate_on_submit():
         flash(form.errors)
 
-    review_body = form.review.data
-    review = ArticleReview(body=review_body, user_id=current_user.user_id, article_id=article_id)
+    review_body = form.body.data
+    review = ArticleReview(body=review_body, user_id=current_user.id, article_id=article_id)
     db.session.add(review)
     db.session.commit()
     db.session.close()
@@ -75,6 +75,8 @@ def review_article(article_id):
 @article.route('/<int:article_id>/del', methods=['GET'])
 @login_required
 def delete_article(article_id):
+    if Article.query.get(article_id) is None:
+        abort(404)
     del_article = Article.query.get(article_id)
     if current_user.id == del_article.user_id:
         if del_article.reviews is not None:
@@ -95,4 +97,6 @@ def article_not_found(error):
     if os.path.split(request.path)[-1].isdigit():
         message = {'name': 'Article not found.',
                    'description': 'Please check your access to right article.'}
-    return render_template('error.html', error=message)
+        return render_template('error.html', error=message)
+    else:
+        return render_template('error.html', error=error)

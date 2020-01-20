@@ -25,11 +25,11 @@ def test_new_post(client, auth):
     assert show_post.status_code == 200
 
 
-def test_review(client, auth):
+def test_post_review(client, auth):
     auth.login()
 
-    post_response = client.post('post/new', data={'body': 'test post'})
-    review_response = client.post('post/1', data={'body': 'test review'})
+    client.post('post/new', data={'body': 'test post'})
+    client.post('post/1', data={'body': 'test review'})
     review = PostReview.query.get(1)
     assert review.user_id == 1
     assert review.post_id == 1

@@ -69,6 +69,8 @@ def review_post(post_id):
 @post.route('/<int:post_id>/del', methods=['GET'])
 @login_required
 def delete_post(post_id):
+    if Post.query.get(post_id) is None:
+        abort(404)
     del_post = Post.query.get(post_id)
     if current_user.id == del_post.user_id:
         if del_post.reviews is not None:
@@ -89,7 +91,9 @@ def post_not_found(error):
     if os.path.split(request.path)[-1].isdigit():
         message = {'name': 'Post not found.',
                    'description': 'Please check your access to right post.'}
-    return render_template('error.html', error=message), 404
+        return render_template('error.html', error=message), 404
+    else:
+        return render_template('error.html', error=error)
 
 
 
