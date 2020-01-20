@@ -5,10 +5,10 @@ class BaseConfig:
 
     DEBUG = False
 
-    POSTGRES_HOST = '172.16.0.5'
-    POSTGRES_PORT = '54322'
-    POSTGRES_USER = 'intern'
-    POSTGRES_PW = 'intern'
+    POSTGRES_HOST = os.getenv('POSTGRES_HOST') or '172.16.0.5'
+    POSTGRES_PORT = os.getenv('POSTGRES_PORT') or '54322'
+    POSTGRES_USER = os.getenv('POSTGRES_USER') or 'intern'
+    POSTGRES_PW = os.getenv('POSTGRES_PW') or 'intern'
     POSTGRES_DB = 'helloflask'
     POSTGRES_TEST_DB = 'helloflask_test'
 

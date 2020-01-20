@@ -1,10 +1,14 @@
+import sentry_sdk
 from flask import Flask, render_template
 from flask_uploads import configure_uploads
+from sentry_sdk.integrations.flask import FlaskIntegration
 
 from flask_app.config import app_config
 from flask_app.views import blueprints
 from flask_app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
 from flask_app.models.user import User
+
+SENTRY_DSN = "https://f057f89dff9a4e34a3d8433a643aabf8@sentry.io/1887833"
 
 
 def load_config_class(config_name):
@@ -22,6 +26,7 @@ def create_app(config_name):
 
 
 def configure_extensions(app):
+
     db.init_app(app)
     migrate.init_app(app, db)
     lm.init_app(app)
@@ -29,6 +34,8 @@ def configure_extensions(app):
     ckeditor.init_app(app)
     configure_uploads(app, icon)
     register_error_handlers(app)
+    sentry_sdk.init(dsn=SENTRY_DSN,
+                    integrations=[FlaskIntegration()])
 
     @lm.user_loader
     def load_user(user_id):
