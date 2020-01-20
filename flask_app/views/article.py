@@ -37,8 +37,7 @@ def new():
     return render_template('new_article.html', user=current_user, form=form)
 
 
-# 文章详情（根据文章id查找）
-@article.route('/<int:article_id>', methods=['GET', 'POST'])
+@article.route('/<int:article_id>', methods=['GET'])
 @login_required
 def show_article(article_id):
     target_article = Article.query.get(article_id)
@@ -47,24 +46,48 @@ def show_article(article_id):
 
     reviews = target_article.reviews
     rv_count = len(reviews)
-
-    # 评论发表和提交
     form = ReviewForm()
-    if request.method == 'POST':
-        if not form.validate_on_submit():
-            flash(form.errors)
-
-        review_body = form.review.data
-        review = ArticleReview(body=review_body, user_id=current_user.user_id, article_id=article_id)
-        db.session.add(review)
-        db.session.commit()
-        db.session.close()
-        flash('Review submitted.')
-        return redirect(url_for('article.show_article', article_id=article_id))
 
     return render_template('show_article.html', user=current_user,
                            article=target_article, form=form,
                            reviews=reviews, rv_count=rv_count)
+
+
+@article.route('/<int:article_id>', methods=['POST'])
+@login_required
+def review_article(article_id):
+    target_article = Article.query.get(article_id)
+
+    # 评论发表和提交
+    form = ReviewForm()
+    if not form.validate_on_submit():
+        flash(form.errors)
+
+    review_body = form.review.data
+    review = ArticleReview(body=review_body, user_id=current_user.user_id, article_id=article_id)
+    db.session.add(review)
+    db.session.commit()
+    db.session.close()
+    flash('Review submitted.')
+    return redirect(url_for('article.show_article', article_id=article_id))
+
+
+@article.route('/<int:article_id>/del', methods=['GET'])
+@login_required
+def delete_article(article_id):
+    del_article = Article.query.get(article_id)
+    if current_user.id == del_article.user_id:
+        if del_article.reviews is not None:
+            reviews = del_article.reviews
+            for review in reviews:
+                db.session.delete(review)
+        db.session.delete(del_article)
+        db.session.commit()
+        db.session.close()
+        flash("Article deleted.", 'success')
+        return redirect(url_for('article.all_articles'))
+    else:
+        return redirect(url_for('article.all_articles')), 403
 
 
 @article.errorhandler(404)

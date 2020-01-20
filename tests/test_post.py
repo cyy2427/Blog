@@ -8,7 +8,7 @@ def test_posts(client, auth):
     assert get_response.status_code == 200
 
 
-def test_newpost(client, auth):
+def test_new_post(client, auth):
     auth.login()
 
     get_response = client.get('post/new')
@@ -35,3 +35,15 @@ def test_review(client, auth):
     assert review.post_id == 1
     assert review.body == 'test review'
     assert review.datetime is not None
+
+
+def test_del_post(client, auth):
+    auth.login()
+    client.post('post/new', data={'body': 'test post'})
+    client.post('post/1', data={'body': 'test review'})
+    post = Post.query.get(1)
+    assert post.reviews[0].body == 'test review'
+
+    response = client.get('post/1/del', follow_redirects=True)
+    assert response.status_code == 200
+    assert Post.query.get(1) is None

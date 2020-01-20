@@ -10,6 +10,9 @@
             <div class="card-text">
             <p>{{ article.body | safe}}</p></div>
             <div class="card-text text-muted">Created at {{ article.datetime }}</div>
+            {% if user.id == article.user_id %}
+                <a href={{ url_for('article.delete_article', article_id=article.id) }}>Delete</a>
+            {% endif %}
         </div>
     </div>
     <br>
