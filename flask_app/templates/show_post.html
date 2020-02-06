@@ -44,7 +44,7 @@
     <div class="card">
         <div class="card-body">
             {% from 'bootstrap/form.html' import render_form %}
-            {{ render_form(forms.review, form_type = "basic", button_map = {"submit": "primary"}) }}
+            {{ render_form(form, form_type = "basic", button_map = {"submit": "primary"}) }}
         </div>
     </div>
 </div>

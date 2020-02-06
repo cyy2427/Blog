@@ -18,8 +18,3 @@ class ArticleForm(FlaskForm):
 class ReviewForm(FlaskForm):
     body = TextAreaField('Review', validators=[InputRequired('Review is null')])
     submit = SubmitField('Submit')
-
-
-class DeleteForm(FlaskForm):
-    yes = SubmitField('Yes')
-    no = SubmitField('No')
