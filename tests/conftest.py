@@ -1,17 +1,14 @@
-import os
 import pytest
-from app import app, db
-from flask_sqlalchemy import SQLAlchemy
-from config import basedir
-from app.models import *
+
+from blog import create_app
+from blog.extensions import db
+from blog.models.user import User
 
 
 @pytest.fixture
 def client():
     # 设置测试数据库路径和测试环境
-    app.config['WTF_CSRF_ENABLED'] = False
-    app.config['TEST'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'test.db')
+    app = create_app('test')
 
     # 初始化测试数据库
     with app.test_client() as client:

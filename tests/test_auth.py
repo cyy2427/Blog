@@ -1,10 +1,13 @@
 from flask import url_for
-from app.models import User
 from flask_login import current_user
+
+from blog.models.user import User
 
 
 def register(client, username, password):
-    return client.post('/register', data={"username": username, "password1":password, "password2": password},
+    return client.post('/register', data={"username": username,
+                                          "password": password,
+                                          "confirm": password},
                        follow_redirects=True)
 
 
@@ -12,11 +15,15 @@ def test_register(client):
     get_response = client.get('/register')
     assert get_response.status_code == 200
 
-    register_response = register(client, 'test123', 'test123')
+    register_response = register(client,
+                                 username='test123',
+                                 password='test123')
     assert b'Successfully registered.' in register_response.data
     assert register_response.status_code == 200
 
-    assert User.query.filter(User.username == 'test123', User.password == 'test123').first() is not None
+    assert User.query.filter(User.username == 'test123') is not None
+    user = User.query.filter(User.username == 'test123').first()
+    assert user.check_password('test123')
 
 
 def test_login(client, auth):
@@ -25,7 +32,7 @@ def test_login(client, auth):
     assert get_response.status_code == 200
 
     login_response = auth.login()
-    assert url_for('post.all_posts') in login_response.headers['Location']
+    assert url_for('main.home') in login_response.headers['Location']
     assert current_user.username == 'test'
 
 

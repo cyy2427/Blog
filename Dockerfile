@@ -1,11 +1,8 @@
-FROM python:3.7.5
+FROM python:3.7.6
 
-MAINTAINER chenyuyi@zkyouxi.com
+MAINTAINER cyy
 
 COPY . /helloflask
 WORKDIR /helloflask
 
-RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple \
-    && flask db init \
-    && flask db migrate \
-    && flask db upgrade
+RUN pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple

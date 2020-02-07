@@ -1,12 +1,22 @@
 version: '3'
 services:
-  helloflask:
+  app:
     build: .
     command: gunicorn -c gunicorn.py app:app
-    container_name: helloflask
+    container_name: Blog
     environment:
-      FLASK_ENV: production
-      FLASK_APP: app
+
+      DB_ENGINE: mysql
+      DB_HOST: 192.168.0.245
+      DB_PORT: 3306
+      DB_USER: cyy
+      DB_PW: 1919
+      DB_PRODUCTION: blog
+      DB_DEV: dev
+      DB_TEST: test
+
+      APP_CFG: dev
+      FLASK_APP: app.py
 
     ports:
-    - '9100:5100'
+    - '50001:5000'
