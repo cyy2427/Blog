@@ -1,6 +1,6 @@
-FROM python:3.7.5
+FROM python:3.7.6
 
-MAINTAINER chenyuyi@zkyouxi.com
+MAINTAINER cyy
 
 COPY . /helloflask
 WORKDIR /helloflask

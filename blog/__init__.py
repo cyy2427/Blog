@@ -3,10 +3,10 @@ from flask import Flask, render_template
 from flask_uploads import configure_uploads
 from sentry_sdk.integrations.flask import FlaskIntegration
 
-from flask_app.config import app_config
-from flask_app.views import blueprints
-from flask_app.extensions import db, migrate, lm, icon, ckeditor, bootstrap
-from flask_app.models.user import User
+from blog.config import app_config
+from blog.views import blueprints
+from blog.extensions import db, migrate, lm, icon, ckeditor, bootstrap
+from blog.models.user import User
 
 SENTRY_DSN = "https://f057f89dff9a4e34a3d8433a643aabf8@sentry.io/1887833"
 

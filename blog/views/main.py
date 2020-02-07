@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from flask_login import login_user, login_required
 
-from flask_app.extensions import db
-from flask_app.forms.user import LoginForm, RegisterForm
-from flask_app.models.user import User
+from blog.extensions import db
+from blog.forms.user import LoginForm, RegisterForm
+from blog.models.user import User
 
 main = Blueprint('main', __name__)
 

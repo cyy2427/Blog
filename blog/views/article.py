@@ -3,9 +3,9 @@ import os
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from flask_login import login_required, current_user
 
-from flask_app.extensions import db
-from flask_app.forms.text import ReviewForm, ArticleForm
-from flask_app.models.text import Article, ArticleReview
+from blog.extensions import db
+from blog.forms.text import ReviewForm, ArticleForm
+from blog.models.text import Article, ArticleReview
 
 
 # 长文本（文章）内容蓝图

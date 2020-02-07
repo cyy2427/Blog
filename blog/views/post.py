@@ -3,9 +3,9 @@ import os
 from flask import Blueprint, render_template, flash, redirect, url_for, request, abort
 from flask_login import login_required, current_user
 
-from flask_app.extensions import db
-from flask_app.forms.text import PostForm, ReviewForm
-from flask_app.models.text import Post, PostReview
+from blog.extensions import db
+from blog.forms.text import PostForm, ReviewForm
+from blog.models.text import Post, PostReview
 
 # 短文本蓝图
 post = Blueprint('post', __name__)

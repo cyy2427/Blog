@@ -3,8 +3,8 @@ import os
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import login_required, current_user, logout_user
 
-from flask_app.extensions import db, icon
-from flask_app.forms.user import IconForm
+from blog.extensions import db, icon
+from blog.forms.user import IconForm
 
 user = Blueprint('user', __name__)
 

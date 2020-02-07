@@ -1,8 +1,8 @@
 import pytest
 
-from flask_app import create_app
-from flask_app.extensions import db
-from flask_app.models.user import User
+from blog import create_app
+from blog.extensions import db
+from blog.models.user import User
 
 
 @pytest.fixture

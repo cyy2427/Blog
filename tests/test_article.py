@@ -1,4 +1,4 @@
-from flask_app.models.text import Article, ArticleReview
+from blog.models.text import Article, ArticleReview
 
 
 def test_articles(client, auth):
