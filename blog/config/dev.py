@@ -6,6 +6,7 @@ class BaseConfig:
     DEBUG = False
 
     DB_ENGINE = os.getenv('DB_ENGINE')
+    DB_API = os.getenv('DB_API')
     DB_HOST = os.getenv('DB_HOST')
     DB_PORT = os.getenv('DB_PORT')
     DB_USER = os.getenv('DB_USER')
@@ -15,9 +16,7 @@ class BaseConfig:
     DB_PRODUCTION = os.getenv('DB_PRODUCTION')
 
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    SQLALCHEMY_DATABASE_URI = '%s://%s:%s@%s:%s/%s'\
-                              % (DB_ENGINE, DB_USER, DB_PW, DB_HOST,
-                                 DB_PORT, DB_DEV)
+    SQLALCHEMY_DATABASE_URI = f'{DB_ENGINE}+{DB_API}://{DB_USER}:{DB_PW}@{DB_HOST}:{DB_PORT}/{DB_DEV}'
 
     CSRF_ENABLED = False
     WTF_CSRF_ENABLED = False
