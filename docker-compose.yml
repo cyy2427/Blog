@@ -7,6 +7,7 @@ services:
     environment:
 
       DB_ENGINE: mysql
+      DB_API: pymysql
       DB_HOST: 192.168.0.245
       DB_PORT: 3306
       DB_USER: cyy
