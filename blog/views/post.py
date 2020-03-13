@@ -30,7 +30,7 @@ def new():
 
 
 # 短文本列表显示（按时间倒序）
-@post.route('/all')
+@post.route('/all', methods=['GET'])
 @login_required
 def all_posts():
     posts = Post.query.order_by(Post._datetime.desc()).all()

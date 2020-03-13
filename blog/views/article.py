@@ -13,7 +13,7 @@ article = Blueprint('article', __name__)
 
 
 # 文章列表显示（按时间倒叙）
-@article.route('/all')
+@article.route('/all', methods=['GET'])
 @login_required
 def all_articles():
     articles = Article.query.order_by(Article._datetime.desc()).all()
