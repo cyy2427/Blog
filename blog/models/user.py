@@ -7,6 +7,10 @@ from blog.extensions import db
 
 
 class User(db.Model, UserMixin):
+
+    __tablename__ = 'user'
+    __table_args__ = ({'schema': 'public'})
+
     id = db.Column('id', db.Integer, autoincrement=True, primary_key=True)
     __password = db.Column('password', db.String)
     username = db.Column(db.String(64), unique=True, nullable=False)
